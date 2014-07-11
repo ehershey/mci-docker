@@ -11,6 +11,10 @@ MAINTAINER Ernie Hershey <ernie@mongodb.com>
 # START Docker additions
 #
 
+ADD id_rsa /home/ubuntu/.ssh/id_rsa
+ADD expansions_s3.yml /data/expansions_s3.yml
+ADD api_httpscert_path.pem /data/api_httpscert_path.pem
+
 # To route syslog to the outside host
 #
 VOLUME /dev:/hostdev
@@ -29,7 +33,7 @@ RUN mkdir -p /home/ubuntu/.ssh
 # Docker setup for MCI
 #
 RUN mkdir -p /data
-RUN echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCKtThuRvdQtajq5wd+2Jfc4r3u1o+kvfbtFB4bbc3t/5pqse0ptAMS3eoitWd4VZTYb1pxJUaoKSGCsF8HeNfFq2INaCo3gbnEnBnqWnYAvBBNNxfB/VSxSIuZ6q2AAk9kQfhPUXnCEGVcbzU3HG2ELL0Xg6L5fmPnGvqFLXDmtqwAdeRzXvzvevv7uWkWtoHehNN8jGR2NqxnghlBiYntcdF+ajMzPYGorOYct6aixR8ye4f9srTS4U+nJxf4qkJs1+mgr7l+WrwUePWdM0MWeYehlov+SiJlaFRzdpeoNcNEmKdx6Gkzb9y8Vp2Ia95zmgfGzl21U9Sil316J mci-ernie" >> /home/ubuntu/.ssh/authorized_keys
+RUN echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCKT9ftThuRvdQtajq5wd+2Jfc4r3u1o+kvfbtFB4bbc3t/5pqse0ptAMS3eoitWd4VZTYb1pxJUaoKSGCsF8HeNfFq2INaCo3gbnEnBnqWnYAvBBNNxfB/VSxSIuZ6q2AAk9kQfhPUXnCEGVcbzU3HG2ELL0Xg6L5fmPnGvqFLXDmtqwAdeRzXvzvevv7uWkWtoHehNN8jGR2NqxnghlBiYntcdF+ajMzPYGorOYct6aixR8ye4f9srTS4U+nJxf4qkJs1+mgr7l+WrwUePWdM0MWeYehlov+SiJlaFRzdpeoNcNEmKdx6Gkzb9y8Vp2Ia95zmgfGzl21U9Sil316J mci-ernie" >> /home/ubuntu/.ssh/authorized_keys
 
 RUN echo "github.com,207.97.227.239 ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ==" | tee -a /home/ubuntu/.ssh/known_hosts
 RUN echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDOKHeJ/AfWWTnwhiZYSPQ4HRSe84sf4qUgyAGGU+rJkq6Pwuk064/wh+D2vx1dOMQMETAcV4xB3AYw3S04ZHKwz61SLJSyjvJ3NItU7SKa8dNxr1EJywfk63tTAudleH4DjAFzHdRMqZT1penOhEJtKruyzxVuSpwFjkjJY/3vhawu9oNiolGhGvm/QzbxF8CjhWsLk/oAT8poWCsbvz5WlU6ttSMc6dkPLIB4kj0nlq8QDHdK6GnB9DRIGActa6fJaDRxGqgmnYIk5W44nFTGqIcfvqBC7LM83rnVeaseVWytSlbAQL11b+ZDw+UaQeT4CZ9Ft9Wi2MNuqU+NHu4f slave@10gen.com" | tee -a /home/ubuntu/.ssh/id_rsa.pub
@@ -81,3 +85,4 @@ RUN echo "ulimit -n 64000" >> /home/ubuntu/.bashrc
 RUN echo "ulimit -n 64000" >> /home/ubuntu/.bash_profile
 RUN chown -R ubuntu:ubuntu /data
 RUN chown -R ubuntu:ubuntu /home/ubuntu/.ssh
+ADD start_sshd.sh /usr/local/bin/start_sshd.sh
