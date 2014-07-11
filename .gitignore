@@ -1,1 +1,4 @@
 PrivateDockerfile
+api_httpscert_path.pem
+expansions_s3.yml
+id_rsa
