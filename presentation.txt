@@ -1,0 +1,59 @@
+Outline
+=======
+1. Intro - me and project
+
+A) I'm Ernie. Pat Gunn helped yesterday. 
+
+B) Project was to get more familiar with Docker and have MCI use it to do platform specific mongodb builds and tests. 
+
+2. Problem to solve
+
+A) Right now MCI uses ec2 for almost everything. We have limited physical hardware
+
+B) Physical hardware can only do builds and tests for CentOS / RHEL, and we only use for generic community bulds now. 
+No enterprise.
+
+C) Ec2 is limited - amazon specific, requires booting vm's, requires dealing with big images or AMI's. 
+
+3. What we did 
+
+A) Core OS installed on physical machine
+
+B) Took MCI Ubuntu 12.04 config, converted to Docker file
+
+C) Ran 6 containers
+
+D) Pointed MCI to it
+
+4. Results
+
+A) Compile ran, tests didn't work with a locale problem
+
+
+More Detailed Notes
+===================
+My project was to get mci to talk to docker for Mongodb builds and tests.
+
+Right now we have physical hardware  constrained to build and test our
+generic Linux 64 build only.
+Can't do enterprise.
+Can't do other builds for specific Linux distributions.
+
+Pat gunn helped half the time
+Helped with coreos and initial docker and image setup.
+
+Set up coreos on actual hardware. It's highly optimized for running
+docker containers and you can't even install packages directly on the
+os. Everything is installed as a container. It also does clustering
+and some automatic performance tweaks.
+
+Took mci config for Ubuntu, converted to docker file, built new docker
+image, ran 6 containers with sshd in them, which is how mci connects
+to them, pointed mci from my iMac to the containers and it built
+enterprise and ran tests without actual Ubuntu os running anywhere.
+
+No unneeded services
+No hardware emulation
+No instance startup time
+No modifications needed to the host os
+No vm images
